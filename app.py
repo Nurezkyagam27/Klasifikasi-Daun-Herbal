@@ -84,4 +84,4 @@ if image:
     st.markdown(f"<p style='text-align:center; font-size:16px;'>Tingkat Keyakinan: <strong>{confidence:.2f}%</strong></p>", unsafe_allow_html=True)
     st.markdown(f"<p style='text-align:center; font-size:18px; color:#444; border-left: 4px solid #0abf53; padding-left: 10px;'><strong>Khasiat:</strong> {manfaat}</p>", unsafe_allow_html=True)
 else:
-    st.
+    st.info("Pilih metode input dari tombol di bawah (kamera atau upload gambar).")
