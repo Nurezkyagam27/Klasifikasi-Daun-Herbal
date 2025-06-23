@@ -26,7 +26,7 @@ khasiat_daun = {
 # --- Load Model ---
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model('mobilenetv2_model.h5')
+    return tf.keras.models.load_model('mobilenetv22_model.h5')
 
 # --- Preprocessing ---
 def preprocess_and_predict(model, image):
