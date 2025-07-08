@@ -75,19 +75,25 @@ elif st.session_state.input_mode == "camera":
 
 # --- Output dan Hasil ---
 if image:
-    with st.container():
-        resized_image = image.copy()
-        resized_image.thumbnail((224, 224))  # Resize proporsional max 400x400 px
+    # Resize proporsional maksimal 300x300 px
+    resized_image = image.copy()
+    resized_image.thumbnail((300, 300))
 
-        st.markdown(
-            """
-            <div style="display:flex; justify-content:center; align-items:center; padding:10px;">
-            """,
-            unsafe_allow_html=True
-        )
+    # Konversi ke base64 untuk disisipkan ke HTML agar center 100%
+    buffered = io.BytesIO()
+    resized_image.save(buffered, format="PNG")
+    img_b64 = base64.b64encode(buffered.getvalue()).decode()
 
-        st.image(resized_image, caption="Gambar Daun", output_format="JPEG")
-        st.markdown("</div>", unsafe_allow_html=True)
+    # Tampilkan gambar center dengan HTML
+    st.markdown(
+        f"""
+        <div style="text-align:center;">
+            <img src="data:image/png;base64,{img_b64}" alt="Gambar Daun" style="max-height:300px; border-radius:10px;" />
+            <p style="color:gray;">Gambar Daun</p>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
     with st.spinner("Menganalisis gambar..."):
         predicted_class, confidence = preprocess_and_predict(model, image)
