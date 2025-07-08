@@ -77,7 +77,7 @@ elif st.session_state.input_mode == "camera":
 if image:
     with st.container():
         resized_image = image.copy()
-        resized_image.thumbnail((400, 400))  # Resize proporsional max 400x400 px
+        resized_image.thumbnail((224, 224))  # Resize proporsional max 400x400 px
 
         st.markdown(
             """
