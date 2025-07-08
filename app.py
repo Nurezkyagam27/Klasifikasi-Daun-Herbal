@@ -81,7 +81,7 @@ if image:
 
         st.markdown(
             """
-            <div style="text-align:center; border:1px solid #333; padding:10px; border-radius:10px; background-color:#111;">
+            <div style="display:flex; justify-content:center; align-items:center; padding:10px;">
             """,
             unsafe_allow_html=True
         )
