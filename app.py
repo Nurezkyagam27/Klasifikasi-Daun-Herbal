@@ -41,15 +41,15 @@ st.set_page_config(page_title="Klasifikasi Daun Herbal", layout="centered")
 st.markdown("<h3 style='text-align: center;'><span style='color:#0abf53;'>CARI</span> TANAMAN HERBAL<br><span style='color:#1abc9c;'>DENGAN</span> SATU KLIK!!</h3>", unsafe_allow_html=True)
 st.markdown("---")
 
-# --- Pemilihan Mode Input lewat Footer Tombol ---
+# --- Pilihan Input ---
 st.markdown("### Pilih metode input dari tombol di bawah 👇")
+st.markdown("---")
 
-# Buat state session untuk menyimpan input mode
+# Buat state session
 if "input_mode" not in st.session_state:
     st.session_state.input_mode = None
 
-# --- Footer Ikon sebagai Tombol Input ---
-st.markdown("---")
+# Tombol Pilihan Input
 col1, col2, col3, col4, col5 = st.columns(5)
 with col2:
     if st.button("📷", help="Gunakan Kamera"):
@@ -58,10 +58,11 @@ with col4:
     if st.button("🖼️", help="Upload Gambar"):
         st.session_state.input_mode = "upload"
 
-# --- Input Berdasarkan Tombol ---
-image = None
+# --- Load Model ---
 model = load_model()
+image = None
 
+# --- Input Gambar ---
 if st.session_state.input_mode == "upload":
     uploaded_file = st.file_uploader("Upload gambar daun", type=["jpg", "jpeg", "png"])
     if uploaded_file:
@@ -72,9 +73,19 @@ elif st.session_state.input_mode == "camera":
     if camera_image:
         image = Image.open(camera_image)
 
-# --- Prediksi dan Output ---
+# --- Output dan Hasil ---
 if image:
-    st.image(image, caption="Gambar Daun", use_column_width=True)
+    # Tampilkan gambar dengan batas tinggi
+    with st.container():
+        st.markdown(
+            """
+            <div style="max-height:400px; overflow-y:auto; border:1px solid #333; padding:10px; border-radius:10px; background-color:#111;">
+            """,
+            unsafe_allow_html=True
+        )
+        st.image(image, caption="Gambar Daun", use_column_width=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
     with st.spinner("Menganalisis gambar..."):
         predicted_class, confidence = preprocess_and_predict(model, image)
         manfaat = khasiat_daun.get(predicted_class, "Khasiat tidak ditemukan.")
@@ -82,6 +93,7 @@ if image:
     st.markdown("---")
     st.markdown(f"<p style='text-align:center; font-size:24px; color:#0abf53;'><strong>{predicted_class}</strong></p>", unsafe_allow_html=True)
     st.markdown(f"<p style='text-align:center; font-size:16px;'>Tingkat Keyakinan: <strong>{confidence:.2f}%</strong></p>", unsafe_allow_html=True)
-    st.markdown(f"<p style='text-align:center; font-size:18px; color:#444; border-left: 4px solid #0abf53; padding-left: 10px;'><strong>Khasiat:</strong> {manfaat}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p style='text-align:center; font-size:18px; color:#ccc; border-left: 4px solid #0abf53; padding-left: 10px;'><strong>Khasiat:</strong> {manfaat}</p>", unsafe_allow_html=True)
+
 else:
     st.info("Pilih metode input dari tombol di bawah (kamera atau upload gambar).")
