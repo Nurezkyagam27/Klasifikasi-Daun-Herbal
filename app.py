@@ -75,18 +75,19 @@ elif st.session_state.input_mode == "camera":
 
 # --- Output dan Hasil ---
 if image:
-    # Tampilkan gambar dengan batas tinggi
     with st.container():
-    resized_image = image.copy()
-    resized_image.thumbnail((400, 400))  # Resize proporsional max 400x400 px
-    st.markdown(
-        """
-        <div style="text-align:center; border:1px solid #333; padding:10px; border-radius:10px; background-color:#111;">
-        """,
-        unsafe_allow_html=True
-    )
-    st.image(resized_image, caption="Gambar Daun", output_format="JPEG")
-    st.markdown("</div>", unsafe_allow_html=True)
+        resized_image = image.copy()
+        resized_image.thumbnail((400, 400))  # Resize proporsional max 400x400 px
+
+        st.markdown(
+            """
+            <div style="text-align:center; border:1px solid #333; padding:10px; border-radius:10px; background-color:#111;">
+            """,
+            unsafe_allow_html=True
+        )
+
+        st.image(resized_image, caption="Gambar Daun", output_format="JPEG")
+        st.markdown("</div>", unsafe_allow_html=True)
 
     with st.spinner("Menganalisis gambar..."):
         predicted_class, confidence = preprocess_and_predict(model, image)
