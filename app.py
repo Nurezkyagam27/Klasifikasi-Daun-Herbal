@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 import io
-
+import base64
 # --- Label dan Khasiat ---
 class_names = [
     'Belimbing Wuluh', 'Jambu Biji', 'Jeruk Nipis', 'Kemangi',
