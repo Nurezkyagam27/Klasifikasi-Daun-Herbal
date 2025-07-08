@@ -88,7 +88,6 @@ if image:
     st.image(resized_image, caption="Gambar Daun", output_format="JPEG")
     st.markdown("</div>", unsafe_allow_html=True)
 
-
     with st.spinner("Menganalisis gambar..."):
         predicted_class, confidence = preprocess_and_predict(model, image)
         manfaat = khasiat_daun.get(predicted_class, "Khasiat tidak ditemukan.")
