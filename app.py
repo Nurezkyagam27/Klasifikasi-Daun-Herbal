@@ -3,6 +3,7 @@ import tensorflow as tf
 from PIL import Image
 import numpy as np
 from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
+import io
 
 # --- Label dan Khasiat ---
 class_names = [
